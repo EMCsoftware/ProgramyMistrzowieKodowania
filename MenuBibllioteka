@@ -1,0 +1,225 @@
+#include <iostream>
+#include <cstdio>
+#include <vector>
+#include <conio.h>
+#include <fstream>
+#include <cstdlib>
+using namespace std;
+void drawmenu(unsigned short posopt, unsigned long long poscli, string optlist[], vector <string>& klienci)
+{
+cout<<"|=====================|=====================|"<<endl;
+
+int kolejka;
+unsigned long long powtorki;
+if(klienci.size() <= 4)
+powtorki = 4;
+else
+    powtorki = klienci.size();
+for (kolejka = 1; kolejka <= powtorki; kolejka++)
+{
+cout<<"|";
+if(posopt == kolejka)
+{
+    cout<<">"<<optlist[kolejka ];
+    for(int i = 1; i <= 21-optlist[kolejka ].length()-1; i ++)
+    {
+        cout<<" ";
+    }
+}else{
+cout<<optlist[kolejka ];
+    for(int i = 1; i <= 21-optlist[kolejka ].length(); i++)
+    {
+        cout<<" ";
+     }
+}
+cout<<"|";
+
+//czesc spisu klientow
+if(poscli == kolejka)
+{
+    cout<<">"<<klienci[kolejka - 1];
+    if (klienci[kolejka - 1] != "")
+    {
+
+    for(int i = 1; i <= 21-klienci[kolejka - 1].length()-1; i ++)
+    {
+        cout<<" ";
+    }}
+    else{cout<<"                     ";}
+}else{
+    if(klienci[kolejka - 1] != "")
+    {
+cout<<klienci[kolejka - 1];
+    for(int i = 1; i <= 21-klienci[kolejka - 1].length(); i++)
+    {
+        cout<<" ";
+     }
+    }
+    else{cout<<"                     ";}
+}
+cout<<"|"<<endl;
+
+
+
+//powtarzamy ta czesc
+}
+
+cout<<"|=====================|=====================|"<<endl<<"Wazne! Wybierajac opcje 'Dodaj Uzytkownika' nie ma znaczenia, ktory klient jest wybrany w prawej kolumnie.\nAby wyjsc z programu, wcisnij Esc.";
+}
+
+int main()
+{
+vector <string> klienci;
+string optionsmenubuffer[4];
+string optionslist[4];
+optionslist[1] = "Nieoddane ksiazki";//dodajemy do listy 4 elementy,      1 element
+optionslist[2] = "Dane klientow";//                                       2 element
+optionslist[3] = "Dodaj uzytkownika";//                                   3 element
+optionslist[4] = "Zmien status ksiazki";//                                4 element
+fstream wczytanedane;//zmienna przechowujaca plik
+wczytanedane.open("imionaklientow.baza", ios::in | ios::out);
+if(wczytanedane.good() == true)
+{
+string danepobrane;
+while(!wczytanedane.eof())
+{
+    getline(wczytanedane, danepobrane);
+    klienci.push_back(danepobrane);
+}
+wczytanedane.close();
+}else
+{
+cout<<"\n\n\n\nPrzepraszamy, wystapil blad wczytawania pliku. Upewnij sie, ze:\n -plik 'imionaklientow.baza' istnieje na dysku\n -posiadasz uprawnienia do odczytu pliku\n\nNacisnj dowolny klawiz, aby zamknac program."<<endl<<endl<<endl<<endl;
+getchar();
+/*Po wcisnieciu klawisza program konczy dzialanie*/
+}
+
+
+//*************************************************koniec wczytywania****************
+unsigned short menuoptionsposition = 1;
+unsigned long long menuclientsposition = 1;
+bool menulevel = 0;
+unsigned char znak;
+bool options = 0;
+
+do
+{
+  system("cls");
+  drawmenu(menuoptionsposition, menuclientsposition, optionslist, klienci);
+  options = 0;
+  znak = getch();
+switch (znak)
+{
+case 72:
+if(menulevel == 0)
+{
+        if (menuoptionsposition > 1)
+    {
+        menuoptionsposition = menuoptionsposition - 1;
+        break;
+    }
+    else
+    {
+        menuoptionsposition = 4;
+        break;
+    }
+}else
+{
+        if (menuclientsposition > 1)
+    {
+        menuclientsposition = menuclientsposition - 1;
+        break;
+    }
+    else
+    {
+        menuclientsposition = klienci.size();
+        break;
+    }
+}
+
+
+
+case 80:
+if(menulevel == 0)
+{
+    if (menuoptionsposition < 4)
+    {
+        menuoptionsposition ++;
+        break;
+    }
+    else
+    {
+        menuoptionsposition = 1;
+        break;
+    }
+}else{
+    if (menuclientsposition < klienci.size())
+    {
+        menuclientsposition ++;
+        break;
+    }
+    else
+    {
+        menuclientsposition = 1;
+        break;
+    }
+}
+
+
+
+
+case 75:
+    if (menulevel == 1)
+    {
+        menulevel = 0;
+        break;
+    }
+    else
+        break;
+
+case 77:
+
+    if (menulevel == 0)
+    {
+        menulevel = 1;
+        break;
+    }else
+    {
+    if(menulevel == 1)
+        options = 1;
+        break;
+    }
+case 27:
+exit(1);
+
+}
+        znak = 0;
+
+
+
+}
+while(!options == 1 );
+
+
+switch (menuoptionsposition)
+{
+case 1:
+ //   nieoddaneksiazki(klienci[menuclientsposition]);
+    break;
+case 2:
+ //   daneklientow(klienci[menuclientsposition]);
+    break;
+case 3:
+ //   dodajuzytkownika();
+    break;
+case 4:
+ //   zmienstatusksiazki(klienci[menuclientsposition]);
+    break;
+}
+
+
+
+
+
+return 0;
+}
