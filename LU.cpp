@@ -56,7 +56,7 @@ if(clients.size() <= 4)
 repeats = 4;
 else
     repeats = clients.size();
-for (queue = 1; queue <= repeats; queue++)
+for (queue = 0; queue <= repeats; queue++)
 {
 
 
@@ -146,10 +146,10 @@ system("cls");//czyscimy konsole
 //string clientsmenubuffer[4];//deklarujemy zmienne i tworzymy tablice
 string optionsmenubuffer[4];
 string optionslist[4];
-optionslist[1] = "Nieoddane ksiazki";//dodajemy do listy 4 elementy,      1 element
-optionslist[2] = "Dane klientow";//                                       2 element
-optionslist[3] = "Dodaj uzytkownika";//                                   3 element
-optionslist[4] = "Zmien status ksiazki";//                                4 element
+optionslist[0] = "Nieoddane ksiazki";//dodajemy do listy 4 elementy,      1 element
+optionslist[1] = "Dane klientow";//                                       2 element
+optionslist[2] = "Dodaj uzytkownika";//                                   3 element
+optionslist[3] = "Zmien status ksiazki";//                                4 element
 vector <string> clients;// dynamiczna tablica ze spisem klientow biblioteki, przewaza nad zwyklymi tablicami tym, ze
 //w kazdej chwili mozna zmienic jej rozmiar
 
